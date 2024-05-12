@@ -15,6 +15,7 @@ import vertexMain from './shaders/vertex_main.glsl'
 import fragmentPars from './shaders/fragment_pars.glsl'
 import fragmentMain from './shaders/fragment_main.glsl'
 import earthImage from './images/earthmap4k.jpg'
+import earthLightsImage from './images/5_night_8k.jpg'
 
 const startApp = () => {
   const scene = useScene()
@@ -26,23 +27,23 @@ const startApp = () => {
   const MOTION_BLUR_AMOUNT = 0.725
 
   // lighting
-  const dirLight = new THREE.DirectionalLight('#526cff', .3)
+  const dirLight = new THREE.DirectionalLight('#526cff', 1.8)
   dirLight.position.set(2, 2, 2)
 
   // const ambientLight = new THREE.AmbientLight('#4255ff', 0.5)
   const ambientLight = new THREE.AmbientLight('#ffffff', 0.2)
   
   // Spotlight
-  const spotLightBlue = new THREE.SpotLight( 0x0395d3 );
+  const spotLightBlue = new THREE.SpotLight( 0x0395d3, 0.2 );
   spotLightBlue.position.set( 2, 2, 2 );
 
-  const spotLightPink = new THREE.SpotLight( 0xf210a5 );
+  const spotLightPink = new THREE.SpotLight( 0xf210a5, 0.2 );
   spotLightPink.position.set( -2, 2, 2 );
 
-  const spotLightYellow = new THREE.SpotLight( 0xffe40d );
+  const spotLightYellow = new THREE.SpotLight( 0xffe40d, 0.2 );
   spotLightYellow.position.set( 2, -2, 2 );
 
-  const spotLightGreen = new THREE.SpotLight( 0x2bff00 );
+  const spotLightGreen = new THREE.SpotLight( 0x2bff00, 0.2 );
   spotLightGreen.position.set( 2, 2, -2 );
 
   // const spotLightHelper = new THREE.SpotLightHelper( spotLightBlue );
@@ -52,7 +53,7 @@ const startApp = () => {
   
   scene.add(
     dirLight, 
-    ambientLight, 
+    // ambientLight, 
     spotLightBlue, 
     spotLightPink, 
     spotLightYellow, 
@@ -74,8 +75,15 @@ const startApp = () => {
   earthGroup.add(earthMesh);
   // scene.add(earthMesh);
 
+  const earthLightsMaterial = new THREE.MeshBasicMaterial({
+    map: loader.load(earthLightsImage),
+    blending: THREE.AdditiveBlending
+  });
+  const earthLightsMesh = new THREE.Mesh(earthGeometry, earthLightsMaterial);
+  earthGroup.add(earthLightsMesh);
+
   // meshes
-  const geometry = new THREE.IcosahedronGeometry(1, 400)
+  const geometry = new THREE.IcosahedronGeometry(1, 545)
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
@@ -145,6 +153,7 @@ const startApp = () => {
     requestAnimationFrame(animate);
   
     earthMesh.rotation.y += 0.002;
+    earthLightsMesh.rotation.y += 0.002;
   }
   
   animate();
