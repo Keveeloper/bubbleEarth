@@ -19,6 +19,7 @@ import earthLightsImage from './images/5_night_8k.jpg'
 
 const startApp = () => {
   const scene = useScene()
+  scene.background = new THREE.Color( 0x000000 );
   const camera = useCamera()
   // const gui = useGui()
   const { width, height } = useRenderSize()
@@ -34,16 +35,16 @@ const startApp = () => {
   const ambientLight = new THREE.AmbientLight('#ffffff', 0.2)
   
   // Spotlight
-  const spotLightBlue = new THREE.SpotLight( 0x0395d3, 0.2 );
+  const spotLightBlue = new THREE.SpotLight( 0x0395d3, 0.25 );
   spotLightBlue.position.set( 2, 2, 2 );
 
-  const spotLightPink = new THREE.SpotLight( 0xf210a5, 0.2 );
+  const spotLightPink = new THREE.SpotLight( 0xf210a5, 0.25 );
   spotLightPink.position.set( -2, 2, 2 );
 
-  const spotLightYellow = new THREE.SpotLight( 0xffe40d, 0.2 );
+  const spotLightYellow = new THREE.SpotLight( 0xffe40d, 0.25 );
   spotLightYellow.position.set( 2, -2, 2 );
 
-  const spotLightGreen = new THREE.SpotLight( 0x2bff00, 0.2 );
+  const spotLightGreen = new THREE.SpotLight( 0x2bff00, 0.25 );
   spotLightGreen.position.set( 2, 2, -2 );
 
   // const spotLightHelper = new THREE.SpotLightHelper( spotLightBlue );
