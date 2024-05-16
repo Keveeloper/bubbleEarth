@@ -53,7 +53,7 @@ const startApp = () => {
   // const spotLightHelperGreen = new THREE.SpotLightHelper( spotLightGreen );
   
   scene.add(
-    // dirLight, 
+    dirLight, 
     // ambientLight, 
     spotLightBlue, 
     spotLightPink, 
@@ -84,7 +84,7 @@ const startApp = () => {
   earthGroup.add(earthLightsMesh);
 
   // meshes
-  const geometry = new THREE.IcosahedronGeometry(1, 200)
+  const geometry = new THREE.IcosahedronGeometry(1, 130)
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
