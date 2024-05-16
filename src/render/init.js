@@ -29,11 +29,12 @@ export const initEngine = async () => {
   camera = new THREE.PerspectiveCamera(75, renderAspectRatio, 0.1, 100)
   camera.position.z = 2.5
 
-  renderer = new THREE.WebGLRenderer({ antialias: true })
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
   renderer.setSize(renderWidth, renderHeight)
   renderer.setPixelRatio(window.devicePixelRatio * 1.5)
 
-  renderer.setClearColor(0x090a0b)
+  // renderer.setClearColor(0x090a0b)
+  renderer.setClearColor( 0x000000, 0 ); 
 
 
   // shadow

@@ -14,8 +14,8 @@ import vertexPars from './shaders/vertex_pars.glsl'
 import vertexMain from './shaders/vertex_main.glsl'
 import fragmentPars from './shaders/fragment_pars.glsl'
 import fragmentMain from './shaders/fragment_main.glsl'
-import earthImage from './images/earthmap4k.jpg'
-import earthLightsImage from './images/5_night_8k.jpg'
+// import earthImage from './images/earthmap4k.jpg'
+// import earthLightsImage from './images/5_night_8k.jpg'
 
 const startApp = () => {
   const scene = useScene()
@@ -53,7 +53,7 @@ const startApp = () => {
   // const spotLightHelperGreen = new THREE.SpotLightHelper( spotLightGreen );
   
   scene.add(
-    dirLight, 
+    // dirLight, 
     // ambientLight, 
     spotLightBlue, 
     spotLightPink, 
@@ -70,21 +70,21 @@ const startApp = () => {
   const earthGeometry = new THREE.IcosahedronGeometry(1, 16);
   const earthMaterial = new THREE.MeshStandardMaterial({
     // color: 0xffff00,
-    map: loader.load(earthImage),
+    map: loader.load('https://imagedelivery.net/zbd8viznFTU9Xm-HIspwjQ/44f47c01-82a7-42b3-1b37-de6057609600/public'),
   });
   const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
   earthGroup.add(earthMesh);
   // scene.add(earthMesh);
 
   const earthLightsMaterial = new THREE.MeshBasicMaterial({
-    map: loader.load(earthLightsImage),
+    map: loader.load('https://imagedelivery.net/zbd8viznFTU9Xm-HIspwjQ/6388f36e-7ccd-4a3e-571f-77274742fa00/public'),
     blending: THREE.AdditiveBlending
   });
   const earthLightsMesh = new THREE.Mesh(earthGeometry, earthLightsMaterial);
   earthGroup.add(earthLightsMesh);
 
   // meshes
-  const geometry = new THREE.IcosahedronGeometry(1, 545)
+  const geometry = new THREE.IcosahedronGeometry(1, 200)
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
@@ -159,8 +159,14 @@ const startApp = () => {
   
   animate();
 
-  
+  function onThreeJSLoaded() {
+    // Emitir evento personalizado
+    const event = new Event('threejsLoaded');
+    console.log('que está pasando aquí????');
+    window.dispatchEvent(event);
+  }
 
+  onThreeJSLoaded();
 
   // postprocessing
   addPass(new UnrealBloomPass(new THREE.Vector2(width, height), 0.7, 0.4, 0.4))
