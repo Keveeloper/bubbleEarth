@@ -20,8 +20,8 @@ import fragmentMain from './shaders/fragment_main.glsl'
 // import earthLightsImage from './images/5_night_8k.jpg'
 import { getFresnelMat } from "./fresnel/getFresnelMat.js";
 
-import earth_daymap from './images/2k_earth_daymap.jpg';
-import earth_daymapClouds from './images/2k_earth_clouds.jpg';
+// import earth_daymap from './images/2k_earth_daymap.jpg';
+// import earth_daymapClouds from './images/2k_earth_clouds.jpg';
 
 const startApp = () => {
   const scene = useScene()
@@ -92,7 +92,7 @@ const startApp = () => {
 
   const earthCloudsMaterial = new THREE.MeshBasicMaterial({
     opacity: .2,
-    map: loader.load(earth_daymapClouds),
+    map: loader.load('https://imagedelivery.net/zbd8viznFTU9Xm-HIspwjQ/82b84bd4-7420-4785-f906-1a3a3bd26900/public'),
     blending: THREE.AdditiveBlending
   });
   const earthCloudsMesh = new THREE.Mesh(earthGeometry, earthCloudsMaterial);
