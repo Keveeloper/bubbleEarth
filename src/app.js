@@ -1,4 +1,6 @@
 import * as THREE from 'three'
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+
 import { addPass, useCamera, useGui, useRenderSize, useScene, useTick } from './render/init.js'
 // import postprocessing passes
 import { SavePass } from 'three/examples/jsm/postprocessing/SavePass.js'
@@ -16,6 +18,7 @@ import fragmentPars from './shaders/fragment_pars.glsl'
 import fragmentMain from './shaders/fragment_main.glsl'
 // import earthImage from './images/earthmap4k.jpg'
 // import earthLightsImage from './images/5_night_8k.jpg'
+import { getFresnelMat } from "./fresnel/getFresnelMat.js";
 
 const startApp = () => {
   const scene = useScene()
@@ -84,7 +87,7 @@ const startApp = () => {
   earthGroup.add(earthLightsMesh);
 
   // meshes
-  const geometry = new THREE.IcosahedronGeometry(1, 130)
+  let geometry = new THREE.IcosahedronGeometry(1, 200);
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
@@ -102,6 +105,7 @@ const startApp = () => {
     refractionRatio: 0.985,
     ior: 0.9,
     color: '#ffffff',
+    // flatShading: true,
     // side: THREE.BackSide,
     onBeforeCompile: (shader) => {
       // storing a reference to the shader object
@@ -134,6 +138,11 @@ const startApp = () => {
       )
     },
   })
+  
+  const fresnelMat = getFresnelMat();
+  const glowMesh = new THREE.Mesh(geometry, fresnelMat);
+  glowMesh.scale.setScalar(1.01);
+  earthGroup.add(glowMesh);
 
   const ico = new THREE.Mesh(geometry, material)
   scene.add(ico)
