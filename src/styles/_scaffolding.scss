@@ -15,7 +15,8 @@ body {
 }
 
 canvas {
-  width: 100vw;
+  // width: 100vw;
+  width: 100% !important;
   height: 100vh;
   position: absolute;
   padding: 0;

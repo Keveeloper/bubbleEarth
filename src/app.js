@@ -84,7 +84,7 @@ const startApp = () => {
   earthGroup.add(earthLightsMesh);
 
   // meshes
-  const geometry = new THREE.IcosahedronGeometry(1, 130)
+  const geometry = new THREE.IcosahedronGeometry(1, 190)
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
