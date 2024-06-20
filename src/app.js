@@ -100,11 +100,7 @@ const startApp = () => {
   earthGroup.add(earthCloudsMesh);
 
   // meshes
-<<<<<<< HEAD
-  const geometry = new THREE.IcosahedronGeometry(1, 190)
-=======
   let geometry = new THREE.IcosahedronGeometry(1, 200);
->>>>>>> 814d0dee960c714c3304b564cd0a45f58c7fb4ca
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
