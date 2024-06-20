@@ -1,4 +1,6 @@
 import * as THREE from 'three'
+import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+
 import { addPass, useCamera, useGui, useRenderSize, useScene, useTick } from './render/init.js'
 // import postprocessing passes
 import { SavePass } from 'three/examples/jsm/postprocessing/SavePass.js'
@@ -16,6 +18,10 @@ import fragmentPars from './shaders/fragment_pars.glsl'
 import fragmentMain from './shaders/fragment_main.glsl'
 // import earthImage from './images/earthmap4k.jpg'
 // import earthLightsImage from './images/5_night_8k.jpg'
+import { getFresnelMat } from "./fresnel/getFresnelMat.js";
+
+// import earth_daymap from './images/2k_earth_daymap.jpg';
+// import earth_daymapClouds from './images/2k_earth_clouds.jpg';
 
 const startApp = () => {
   const scene = useScene()
@@ -28,7 +34,7 @@ const startApp = () => {
   const MOTION_BLUR_AMOUNT = 0.725
 
   // lighting
-  const dirLight = new THREE.DirectionalLight('#526cff', 1.8)
+  const dirLight = new THREE.DirectionalLight('#526cff', 1.5)
   dirLight.position.set(2, 2, 2)
 
   // const ambientLight = new THREE.AmbientLight('#4255ff', 0.5)
@@ -71,6 +77,7 @@ const startApp = () => {
   const earthMaterial = new THREE.MeshStandardMaterial({
     // color: 0xffff00,
     map: loader.load('https://imagedelivery.net/zbd8viznFTU9Xm-HIspwjQ/44f47c01-82a7-42b3-1b37-de6057609600/public'),
+    // map: loader.load(earth_daymap),
   });
   const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
   earthGroup.add(earthMesh);
@@ -83,8 +90,21 @@ const startApp = () => {
   const earthLightsMesh = new THREE.Mesh(earthGeometry, earthLightsMaterial);
   earthGroup.add(earthLightsMesh);
 
+  const earthCloudsMaterial = new THREE.MeshBasicMaterial({
+    opacity: .2,
+    map: loader.load('https://imagedelivery.net/zbd8viznFTU9Xm-HIspwjQ/82b84bd4-7420-4785-f906-1a3a3bd26900/public'),
+    blending: THREE.AdditiveBlending
+  });
+  const earthCloudsMesh = new THREE.Mesh(earthGeometry, earthCloudsMaterial);
+  earthCloudsMesh.scale.setScalar(1.01);
+  earthGroup.add(earthCloudsMesh);
+
   // meshes
+<<<<<<< HEAD
   const geometry = new THREE.IcosahedronGeometry(1, 190)
+=======
+  let geometry = new THREE.IcosahedronGeometry(1, 200);
+>>>>>>> 814d0dee960c714c3304b564cd0a45f58c7fb4ca
   const material = new THREE.MeshPhysicalMaterial({
     // roughness: 0,
     // metalness: 0,
@@ -102,6 +122,7 @@ const startApp = () => {
     refractionRatio: 0.985,
     ior: 0.9,
     color: '#ffffff',
+    // flatShading: true,
     // side: THREE.BackSide,
     onBeforeCompile: (shader) => {
       // storing a reference to the shader object
@@ -134,6 +155,11 @@ const startApp = () => {
       )
     },
   })
+  
+  const fresnelMat = getFresnelMat();
+  const glowMesh = new THREE.Mesh(geometry, fresnelMat);
+  glowMesh.scale.setScalar(1.01);
+  earthGroup.add(glowMesh);
 
   const ico = new THREE.Mesh(geometry, material)
   scene.add(ico)
@@ -155,6 +181,7 @@ const startApp = () => {
   
     earthMesh.rotation.y += 0.002;
     earthLightsMesh.rotation.y += 0.002;
+    earthCloudsMesh.rotation.y += 0.003;
   }
   
   animate();
